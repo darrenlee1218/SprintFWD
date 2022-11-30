@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../pages/store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../../app/store';
 
 export interface CartState {
   cartItem: object[];
@@ -25,28 +25,22 @@ const initialState = {
 } as CartState;
 
 export const cartSlice = createSlice({
-  name: "cart",
+  name: 'cart',
   initialState,
   reducers: {
     setCart: (state, action: PayloadAction<CartInput>) => {
-      const checkCart: any = state.cartItem.find(
-        (cart: any) => cart.id === action.payload.product.id
-      );
+      const checkCart: any = state.cartItem.find((cart: any) => cart.id === action.payload.product.id);
       if (!checkCart || checkCart === undefined) {
         state.cartItem.push(action.payload.product);
       }
     },
     toggleCartAmount: (state, action: PayloadAction<CartToggleType>) => {
       const count = action.payload.count;
-      const checkCart: any = state.cartItem.find(
-        (cart: any) => cart.id === action.payload.product.id
-      );
+      const checkCart: any = state.cartItem.find((cart: any) => cart.id === action.payload.product.id);
       checkCart.amount = count;
     },
     removeSingleCart: (state, action: PayloadAction<CartInput>) => {
-      const cart: any = state.cartItem.filter(
-        (cart: any) => cart.id != action.payload.product.id
-      );
+      const cart: any = state.cartItem.filter((cart: any) => cart.id != action.payload.product.id);
       state.cartItem = cart;
     },
     clearCart: (state) => {
@@ -67,13 +61,7 @@ export const cartSlice = createSlice({
   },
 });
 
-export const {
-  setCart,
-  calculateCart,
-  clearCart,
-  toggleCartAmount,
-  removeSingleCart,
-} = cartSlice.actions;
+export const { setCart, calculateCart, clearCart, toggleCartAmount, removeSingleCart } = cartSlice.actions;
 
 export const selectCart = (state: RootState) => state.cart;
 
